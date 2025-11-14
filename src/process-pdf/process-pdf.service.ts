@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import * as puppeteer from 'puppeteer';
-import * as path from 'path';
+import { PdfService } from 'src/common/pdf.service';
 
 @Injectable()
 export class ProcessPdfService {
-  private readonly templatePath: string;
-  private browser: puppeteer.Browser;
+  constructor(private readonly pdfService: PdfService) {}
 
-  constructor() {
-    this.templatePath = path.join(__dirname, '../templates/basic-template.hbs');
+  async generatePdfFromTemplate(data: any): Promise<Buffer> {
+    return await this.pdfService.generateBasicPDF('basic-template', data);
   }
 }
